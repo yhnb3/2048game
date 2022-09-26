@@ -4,7 +4,7 @@ interface IProps {
 
 /**
  * 매트릭스를 오른쪽 방향으로 누적하게 하는 함수
- * @param matrix 기존 2048 매트릭스
+ * @param { number[][] } matrix 기존 2048 매트릭스
  * @returns 오른쪽으로 누적된 매트릭스
  */
 
