@@ -5,7 +5,7 @@ interface IProps {
 /**
  * 매트릭스를 윗 방향으로 누적하게 하는 함수
  * @param { number[][] } matrix 기존 2048 매트릭스
- * @returns { matrix: number[][], score: number } 누적된 매트릭스와 점수
+ * @returns 누적된 매트릭스와 점수
  */
 
 export const moveUp = ({ matrix }: IProps) => {
