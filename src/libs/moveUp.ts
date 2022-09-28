@@ -5,10 +5,12 @@ interface IProps {
 /**
  * 매트릭스를 윗 방향으로 누적하게 하는 함수
  * @param { number[][] } matrix 기존 2048 매트릭스
- * @returns 위로 누적된 매트릭스
+ * @returns { matrix: number[][], score: number } 누적된 매트릭스와 점수
  */
+
 export const moveUp = ({ matrix }: IProps) => {
   const newMatrix = new Array(4).fill(0).map(() => new Array(4).fill(0))
+  let score = 0
   for (let y = 0; y < 4; y += 1) {
     let idx = 0
     let newIdx = 0
@@ -19,6 +21,7 @@ export const moveUp = ({ matrix }: IProps) => {
           prevNum = matrix[idx][y]
         } else if (matrix[idx][y] === prevNum) {
           newMatrix[newIdx][y] = prevNum * 2
+          score += prevNum * 2
           prevNum = -1
           newIdx += 1
         } else {
@@ -33,5 +36,5 @@ export const moveUp = ({ matrix }: IProps) => {
       newMatrix[newIdx][y] = prevNum
     }
   }
-  return newMatrix
+  return { matrix: newMatrix, score }
 }

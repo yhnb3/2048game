@@ -14,12 +14,14 @@ describe('2048에 필요한 함수들 테스트', () => {
         [2, 0, 0, 0],
         [2, 2, 0, 0],
       ]
-      expect(moveDown({ matrix })).toEqual([
+      const { matrix: newMatrix, score } = moveDown({ matrix })
+      expect(newMatrix).toEqual([
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [4, 0, 0, 0],
         [4, 4, 0, 2],
       ])
+      expect(score).toEqual(12)
     })
     it('위로 누적하는 함수 ex1', () => {
       const matrix = [
@@ -28,12 +30,14 @@ describe('2048에 필요한 함수들 테스트', () => {
         [2, 4, 0, 0],
         [2, 4, 2, 2],
       ]
-      expect(moveUp({ matrix })).toEqual([
+      const { matrix: newMatrix, score } = moveUp({ matrix })
+      expect(newMatrix).toEqual([
         [4, 8, 2, 4],
         [4, 4, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
       ])
+      expect(score).toEqual(20)
     })
     it('왼쪽으로 누적하는 함수 ex1', () => {
       const matrix = [
@@ -42,12 +46,14 @@ describe('2048에 필요한 함수들 테스트', () => {
         [0, 2, 0, 2],
         [0, 0, 0, 2],
       ]
-      expect(moveLeft({ matrix })).toEqual([
+      const { matrix: newMatrix, score } = moveLeft({ matrix })
+      expect(newMatrix).toEqual([
         [4, 4, 0, 0],
         [4, 2, 0, 0],
         [4, 0, 0, 0],
         [2, 0, 0, 0],
       ])
+      expect(score).toEqual(16)
     })
     it('오른쪽으로 누적하는 함수 ex1', () => {
       const matrix = [
@@ -56,12 +62,14 @@ describe('2048에 필요한 함수들 테스트', () => {
         [2, 0, 2, 0],
         [2, 0, 0, 0],
       ]
-      expect(moveRight({ matrix })).toEqual([
+      const { matrix: newMatrix, score } = moveRight({ matrix })
+      expect(newMatrix).toEqual([
         [0, 0, 4, 4],
         [0, 0, 2, 4],
         [0, 0, 0, 4],
         [0, 0, 0, 2],
       ])
+      expect(score).toEqual(16)
     })
   })
   it('새로운 수 추가하는 함수', () => {
