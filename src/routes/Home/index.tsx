@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useMount, useUnmount } from 'react-use'
+import _ from 'lodash'
 
 import { Board } from 'components'
-import { addNewCell, moveDown, moveLeft, moveRight, moveUp, selectMoveFunc } from 'libs'
-import { checkGameOver } from 'libs/checkGameOver'
-import { useCheckGameOver } from 'hooks/useCheckGameOver'
+import { addNewCell, selectMoveFunc } from 'libs'
+import { useCheckGameOver } from 'hooks'
 
 const INIT_MATRIX = [
   [0, 0, 0, 0],
@@ -17,11 +17,12 @@ const Home = () => {
   const [score, setScore] = useState(0)
   const { isGameOver } = useCheckGameOver({ matrix })
   const conditinalMoveFnc = (e: KeyboardEvent) => {
-    if (!isGameOver) return
+    if (isGameOver) return
     const { key } = e
     if (key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight') {
       setMatrix((prevMatrix) => {
         const { score: newScore, matrix: nextMatrix } = selectMoveFunc({ key, matrix: prevMatrix })
+        if (_.isEqual(prevMatrix, nextMatrix)) return prevMatrix
         setScore((prevScore) => prevScore + newScore)
         return addNewCell({ matrix: nextMatrix })
       })
