@@ -59,17 +59,17 @@ describe('2048에 필요한 함수들 테스트', () => {
       const matrix = [
         [2, 2, 2, 2],
         [0, 2, 2, 2],
-        [2, 0, 2, 0],
+        [0, 0, 2, 4],
         [2, 0, 0, 0],
       ]
       const { matrix: newMatrix, score } = moveRight({ matrix })
       expect(newMatrix).toEqual([
         [0, 0, 4, 4],
         [0, 0, 2, 4],
-        [0, 0, 0, 4],
+        [0, 0, 2, 4],
         [0, 0, 0, 2],
       ])
-      expect(score).toEqual(16)
+      expect(score).toEqual(12)
     })
   })
   it('새로운 수 추가하는 함수', () => {

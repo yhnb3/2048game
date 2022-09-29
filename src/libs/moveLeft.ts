@@ -26,7 +26,7 @@ export const moveLeft = ({ matrix }: IProps) => {
           newIdx += 1
         } else {
           newMatrix[x][newIdx] = prevNum
-          prevNum = matrix[x][newIdx]
+          prevNum = matrix[x][idx]
           newIdx += 1
         }
       }
