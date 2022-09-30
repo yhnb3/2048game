@@ -1,13 +1,11 @@
-.boardSection {
-  position: absolute;
-  top: 0;
-  left: 0;
+.board {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   width: 450px;
   height: 450px;
   padding: 10px;
+  background-color: #bbada0;
   border-radius: 10px;
 }
 
@@ -19,9 +17,6 @@
   line-height: 100px;
   text-align: center;
   vertical-align: middle;
+  background-color: #cdc1b4;
   border-radius: 10px;
-
-  &.colored {
-    background-color: #eee4da;
-  }
 }

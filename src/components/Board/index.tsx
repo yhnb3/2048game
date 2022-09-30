@@ -1,4 +1,6 @@
 import { useMemo } from 'react'
+import cx from 'classnames'
+
 import styles from './board.module.scss'
 
 interface IProps {
@@ -11,16 +13,17 @@ const Board = ({ matrix }: IProps) => {
       matrix.map((row, rowIdx) =>
         row.map((cell, colIdx) => {
           const key = `${rowIdx} ${colIdx}`
-          return (
-            <div className={styles.cell} key={key}>
+          return cell !== 0 ? (
+            <div className={cx(styles.cell, styles.colored)} key={key}>
               {cell}
             </div>
+          ) : (
+            <div className={styles.cell} />
           )
         })
       ),
     [matrix]
   )
-
   return <section className={styles.boardSection}>{board}</section>
 }
 
