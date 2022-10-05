@@ -24,6 +24,7 @@ export const newMoveDown = ({ matrix }: IProps) => {
           canBeMergeIdx = idx
         } else if (matrix[idx][y].current === canBeMergeNum) {
           newMatrix[newIdx][y].current = canBeMergeNum * 2
+          newMatrix[newIdx][y].isNew = true
           score += canBeMergeNum * 2
           newMatrix[canBeMergeIdx][y].move = newIdx - canBeMergeIdx
           newMatrix[idx][y].move = newIdx - idx

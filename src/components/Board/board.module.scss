@@ -21,12 +21,34 @@
   vertical-align: middle;
   border-radius: 10px;
 
-  &.colored {
+  &.color2 {
     background-color: #eee4da;
   }
 
   &.move {
     transition: transform 0.2s ease-out;
+  }
+
+  &.new {
+    z-index: 5;
+    animation: scaling 0.3s ease-out;
+  }
+
+  &.color4 {
+    background-color: #eee1c9;
+  }
+}
+
+@keyframes scaling {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scaleY(1.1);
+  }
+
+  100% {
     transform: scale(1);
   }
 }
