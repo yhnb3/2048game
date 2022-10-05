@@ -1,43 +1,63 @@
 import { useState } from 'react'
 import { useMount, useUnmount } from 'react-use'
-import _ from 'lodash'
 
 import { BackgroundBoard, Board } from 'components'
 import { addNewCell, selectMoveFunc } from 'libs'
 import { useCheckGameOver } from 'hooks'
 import styles from './home.module.scss'
+import { newMoveDown } from 'libs/newMoveDown'
+import { ICell } from 'types'
 
 const INIT_MATRIX = [
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [2, 0, 0, 0],
+  [
+    { prev: 0, current: 2, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+  ],
+  [
+    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+  ],
+  [
+    { prev: 0, current: 2, move: 0, isNew: false },
+    { prev: 0, current: 2, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+  ],
+  [
+    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 2, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false },
+  ],
 ]
 const Home = () => {
-  const [matrix, setMatrix] = useState(addNewCell({ matrix: INIT_MATRIX }))
+  const [matrix, setMatrix] = useState<ICell[][]>(INIT_MATRIX)
   const [score, setScore] = useState(0)
 
   // const { isGameOver } = useCheckGameOver({ matrix })
-  // const conditinalMoveFnc = (e: KeyboardEvent) => {
-  //   if (isGameOver) return
-  //   const { key } = e
-  //   if (key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight') {
-  //     setMatrix((prevMatrix) => {
-  //       const { score: newScore, matrix: nextMatrix } = selectMoveFunc({ key, matrix: prevMatrix })
-  //       if (_.isEqual(prevMatrix, nextMatrix)) return prevMatrix
-  //       setScore((prevScore) => prevScore + newScore)
-  //       return addNewCell({ matrix: nextMatrix })
-  //     })
-  //   }
-  // }
+  const conditinalMoveFnc = (e: KeyboardEvent) => {
+    // if (isGameOver) return
+    const { key } = e
+    if (key === 'ArrowDown') {
+      // if (key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight') {
+      setMatrix((prevMatrix) => {
+        const { matrix: newMatrix } = newMoveDown({ matrix: prevMatrix })
+        return newMatrix
+      })
+    }
+  }
 
-  // useMount(() => {
-  //   window.addEventListener('keydown', conditinalMoveFnc)
-  // })
+  useMount(() => {
+    window.addEventListener('keydown', conditinalMoveFnc)
+  })
 
-  // useUnmount(() => {
-  //   window.removeEventListener('keydown', conditinalMoveFnc)
-  // })
+  useUnmount(() => {
+    window.removeEventListener('keydown', conditinalMoveFnc)
+  })
 
   return (
     <main>

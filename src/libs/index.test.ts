@@ -4,24 +4,65 @@ import { moveDown } from './moveDown'
 import { moveLeft } from './moveLeft'
 import { moveRight } from './moveRight'
 import { moveUp } from './moveUp'
+import { newMoveDown } from './newMoveDown'
 
 describe('2048에 필요한 함수들 테스트', () => {
   describe('위, 아래, 왼쪽, 오른쪽으로 누적하는 함수', () => {
     it('아래로 누적하는 함수 ex1', () => {
       const matrix = [
-        [2, 2, 0, 0],
-        [2, 0, 0, 2],
-        [2, 0, 0, 0],
-        [2, 2, 0, 0],
+        [
+          { prev: 0, current: 2, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+        ],
+        [
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+        ],
+        [
+          { prev: 0, current: 2, move: 0, isNew: false },
+          { prev: 0, current: 2, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+        ],
+        [
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 2, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+        ],
       ]
-      const { matrix: newMatrix, score } = moveDown({ matrix })
+      const { matrix: newMatrix, score } = newMoveDown({ matrix })
       expect(newMatrix).toEqual([
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [4, 0, 0, 0],
-        [4, 4, 0, 2],
+        [
+          { prev: 2, current: 0, move: 3, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+        ],
+        [
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+        ],
+        [
+          { prev: 2, current: 0, move: 1, isNew: false },
+          { prev: 2, current: 0, move: 1, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+        ],
+        [
+          { prev: 0, current: 4, move: 0, isNew: false },
+          { prev: 2, current: 4, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+          { prev: 0, current: 0, move: 0, isNew: false },
+        ],
       ])
-      expect(score).toEqual(12)
+      expect(score).toEqual(8)
     })
     it('위로 누적하는 함수 ex1', () => {
       const matrix = [

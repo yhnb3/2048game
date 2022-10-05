@@ -24,4 +24,9 @@
   &.colored {
     background-color: #eee4da;
   }
+
+  &.move {
+    transition: transform 0.2s ease-out;
+    transform: scale(1);
+  }
 }
