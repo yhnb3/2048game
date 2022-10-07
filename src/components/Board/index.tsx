@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
-import cx from 'classnames'
 
 import styles from './board.module.scss'
 import { ICell } from 'types'
+import Cell from './Cell'
 
 interface IProps {
   matrix: ICell[][]
@@ -14,31 +14,7 @@ const Board = ({ matrix }: IProps) => {
       matrix.map((row, rowIdx) =>
         row.map((cell, colIdx) => {
           const key = `${rowIdx} ${colIdx}`
-          if (cell.current !== 0) {
-            if (cell.isNew) {
-              return (
-                <div className={cx(styles.cell, styles.colored, styles.new, styles[`color${cell.current}`])} key={key}>
-                  {cell.current}
-                </div>
-              )
-            }
-            return (
-              <div className={cx(styles.cell, styles.colored, styles[`color${cell.current}`])} key={key}>
-                {cell.current}
-              </div>
-            )
-          }
-          return cell.prev !== 0 ? (
-            <div
-              className={cx(styles.cell, styles.colored, styles.move, styles[`color${cell.prev}`])}
-              key={key}
-              style={{ transform: `translateY(${cell.move * 110}px)` }}
-            >
-              {cell.prev}
-            </div>
-          ) : (
-            <div className={styles.cell} />
-          )
+          return <Cell key={key} cell={cell} />
         })
       ),
     [matrix]

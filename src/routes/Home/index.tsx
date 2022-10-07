@@ -1,62 +1,76 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useMount, useUnmount } from 'react-use'
 
 import { BackgroundBoard, Board } from 'components'
 import { addNewCell, selectMoveFunc } from 'libs'
-import { useCheckGameOver } from 'hooks'
-import styles from './home.module.scss'
-import { newMoveDown } from 'libs/newMoveDown'
+import { useGameControl } from 'hooks'
 import { ICell } from 'types'
+
+import styles from './home.module.scss'
+import { isIP } from 'net'
 
 const INIT_MATRIX = [
   [
-    { prev: 0, current: 2, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
   ],
   [
-    { prev: 0, current: 0, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
   ],
   [
-    { prev: 0, current: 2, move: 0, isNew: false },
-    { prev: 0, current: 2, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
   ],
   [
-    { prev: 0, current: 0, move: 0, isNew: false },
-    { prev: 0, current: 2, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
-    { prev: 0, current: 0, move: 0, isNew: false },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
+    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
   ],
 ]
 const Home = () => {
-  const [matrix, setMatrix] = useState<ICell[][]>(INIT_MATRIX)
+  const [matrix, setMatrix] = useState<ICell[][]>(() => {
+    return addNewCell({ matrix: addNewCell({ matrix: INIT_MATRIX }) })
+  })
   const [score, setScore] = useState(0)
-
-  // const { isGameOver } = useCheckGameOver({ matrix })
-  const conditinalMoveFnc = (e: KeyboardEvent) => {
-    // if (isGameOver) return
+  const { isGameOver, isPossible } = useGameControl({ matrix })
+  const checkPossible = (key: string) => {
+    const { left, right, up, down } = isPossible
+    if (key === 'ArrowUp' && up) return true
+    if (key === 'ArrowLeft' && left) return true
+    if (key === 'ArrowRight' && right) return true
+    if (key === 'ArrowDown' && down) return true
+    return false
+  }
+  const conditionalMoveFnc = (e: KeyboardEvent) => {
     const { key } = e
-    if (key === 'ArrowDown') {
-      // if (key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight') {
-      setMatrix((prevMatrix) => {
-        const { matrix: newMatrix } = newMoveDown({ matrix: prevMatrix })
-        return newMatrix
+    if (isGameOver || !checkPossible(key)) return
+    setMatrix((prevMatrix) => {
+      const { matrix: newMatrix, score: scoreToAdd } = selectMoveFunc({
+        key,
+        matrix: prevMatrix,
       })
-    }
+      setScore((prevScore) => prevScore + scoreToAdd)
+      return newMatrix
+    })
+
+    setTimeout(() => {
+      setMatrix((prevMatrix) => addNewCell({ matrix: prevMatrix }))
+    }, 200)
   }
 
-  useMount(() => {
-    window.addEventListener('keydown', conditinalMoveFnc)
-  })
-
-  useUnmount(() => {
-    window.removeEventListener('keydown', conditinalMoveFnc)
+  useEffect(() => {
+    window.addEventListener('keydown', conditionalMoveFnc)
+    return () => {
+      window.removeEventListener('keydown', conditionalMoveFnc)
+    }
   })
 
   return (

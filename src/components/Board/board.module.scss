@@ -14,7 +14,7 @@
 .cell {
   width: 100px;
   height: 100px;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 700;
   line-height: 100px;
   text-align: center;
@@ -25,6 +25,38 @@
     background-color: #eee4da;
   }
 
+  &.color4 {
+    background-color: #eee1c9;
+  }
+
+  &.color8 {
+    background-color: #f3b27a;
+  }
+
+  &.color16 {
+    background-color: #f69564;
+  }
+
+  &.color32 {
+    background-color: #f77c5f;
+  }
+
+  &.color64 {
+    background-color: #f7603c;
+  }
+
+  &.color128 {
+    background-color: #faf8ef;
+  }
+
+  &.color256 {
+    background-color: #eecc62;
+  }
+
+  &.color512 {
+    background-color: #edc950;
+  }
+
   &.move {
     transition: transform 0.2s ease-out;
   }
@@ -32,10 +64,6 @@
   &.new {
     z-index: 5;
     animation: scaling 0.3s ease-out;
-  }
-
-  &.color4 {
-    background-color: #eee1c9;
   }
 }
 

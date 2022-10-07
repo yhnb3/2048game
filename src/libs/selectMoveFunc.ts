@@ -1,16 +1,18 @@
-import { moveDown } from './moveDown'
-import { moveLeft } from './moveLeft'
-import { moveRight } from './moveRight'
-import { moveUp } from './moveUp'
+import { ICell } from 'types'
+import { newMoveDown } from './newMoveDown'
+import { newMoveLeft } from './newMoveLeft'
+import { newMoveRight } from './newMoveRight'
+import { newMoveUp } from './newMoveUp'
 
 interface IProps {
   key: string
-  matrix: number[][]
+  matrix: ICell[][]
 }
 
 export const selectMoveFunc = ({ key, matrix }: IProps) => {
-  if (key === 'ArrowUp') return moveUp({ matrix })
-  if (key === 'ArrowDown') return moveDown({ matrix })
-  if (key === 'ArrowLeft') return moveLeft({ matrix })
-  return moveRight({ matrix })
+  if (key === 'ArrowUp') return newMoveUp({ matrix })
+  if (key === 'ArrowDown') return newMoveDown({ matrix })
+  if (key === 'ArrowLeft') return newMoveLeft({ matrix })
+
+  return newMoveRight({ matrix })
 }

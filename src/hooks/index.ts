@@ -1,2 +1,2 @@
 export { useInfinityScroll } from './useInfinityScroll'
-export { useCheckGameOver } from './useCheckGameOver'
+export { useGameControl } from './useGameControl'

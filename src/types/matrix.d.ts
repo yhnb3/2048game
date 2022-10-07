@@ -3,4 +3,5 @@ export interface ICell {
   prev: number
   move: number
   isNew: boolean
+  direction: string
 }
