@@ -1,0 +1,50 @@
+@use '/src/styles/constants/colors';
+
+.header {
+  display: flex;
+  flex-direction: row;
+  width: 450px;
+  height: 110px;
+  margin-top: 20px;
+
+  .title {
+    flex: 1;
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 110px;
+    color: colors.$MAIN_FONT;
+    text-align: start;
+    vertical-align: middle;
+  }
+
+  .scoreBoard {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .scoreBox {
+      width: 100px;
+      height: 50px;
+      padding: 5px;
+      text-align: center;
+      background-color: colors.$SECONDARY;
+
+      .scoreTitle {
+        font-size: 12px;
+        color: colors.$WHITE;
+      }
+
+      .score {
+        padding: 5px;
+        font-size: 18px;
+        color: colors.$MAIN_FONT;
+      }
+
+      + .scoreBox {
+        margin-left: 10px;
+      }
+    }
+  }
+}

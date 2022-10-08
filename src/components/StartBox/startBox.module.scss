@@ -1,0 +1,29 @@
+@use '/src/styles/constants/colors';
+
+.startBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 450px;
+  height: 50px;
+  margin-bottom: 20px;
+
+  .startLeft {
+    flex: 1;
+  }
+
+  .startRight {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
+
+    .startButton {
+      width: 100px;
+      height: 40px;
+      color: colors.$SECONDARY;
+      background-color: colors.$MAIN_FONT;
+      border-radius: 5px;
+    }
+  }
+}

@@ -1,13 +1,11 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useMount, useUnmount } from 'react-use'
+import { useEffect, useState } from 'react'
 
-import { BackgroundBoard, Board } from 'components'
+import { BackgroundBoard, Board, Header, StartBox } from 'components'
 import { addNewCell, selectMoveFunc } from 'libs'
 import { useGameControl } from 'hooks'
 import { ICell } from 'types'
 
 import styles from './home.module.scss'
-import { isIP } from 'net'
 
 const INIT_MATRIX = [
   [
@@ -41,6 +39,12 @@ const Home = () => {
   })
   const [score, setScore] = useState(0)
   const { isGameOver, isPossible } = useGameControl({ matrix })
+
+  const startNewGame = () => {
+    setMatrix(addNewCell({ matrix: addNewCell({ matrix: INIT_MATRIX }) }))
+    setScore(0)
+  }
+
   const checkPossible = (key: string) => {
     const { left, right, up, down } = isPossible
     if (key === 'ArrowUp' && up) return true
@@ -49,6 +53,7 @@ const Home = () => {
     if (key === 'ArrowDown' && down) return true
     return false
   }
+
   const conditionalMoveFnc = (e: KeyboardEvent) => {
     const { key } = e
     if (isGameOver || !checkPossible(key)) return
@@ -75,13 +80,8 @@ const Home = () => {
 
   return (
     <main>
-      <div className={styles.title}>
-        <div>2048</div>
-        <div className={styles.score}>
-          <div>Score : {score}</div>
-          <div>Highest Score : {score}</div>
-        </div>
-      </div>
+      <Header score={score} maxScore={score} />
+      <StartBox startNewGame={startNewGame} />
       <section className={styles.boardSection}>
         <BackgroundBoard />
         <Board matrix={matrix} />
