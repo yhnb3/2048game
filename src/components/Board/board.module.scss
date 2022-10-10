@@ -49,7 +49,7 @@
   }
 
   &.color128 {
-    background-color: #faf8ef;
+    background-color: #edd073;
   }
 
   &.color256 {
@@ -61,22 +61,36 @@
   }
 
   &.move {
-    transition: transform 0.2s ease-out;
+    transition: transform 0.1s ease-out;
   }
 
   &.new {
+    animation: scaling_new 0.2s ease-out;
+  }
+
+  &.add {
     z-index: 5;
-    animation: scaling 0.3s ease-out;
+    animation: scaling_add 0.1s ease-out;
   }
 }
 
-@keyframes scaling {
+@keyframes scaling_new {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaling_add {
   0% {
     transform: scale(1);
   }
 
   50% {
-    transform: scaleY(1.1);
+    transform: scale(1.2);
   }
 
   100% {

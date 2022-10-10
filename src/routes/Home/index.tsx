@@ -34,7 +34,9 @@ const INIT_MATRIX = [
   ],
 ]
 const Home = () => {
+  const [isAdd, setIsAdd] = useState(false)
   const [matrix, setMatrix] = useState<ICell[][]>(() => {
+    setIsAdd(true)
     return addNewCell({ matrix: addNewCell({ matrix: INIT_MATRIX }) })
   })
   const [score, setScore] = useState(0)
@@ -57,6 +59,7 @@ const Home = () => {
   const conditionalMoveFnc = (e: KeyboardEvent) => {
     const { key } = e
     if (isGameOver || !checkPossible(key)) return
+    setIsAdd(false)
     setMatrix((prevMatrix) => {
       const { matrix: newMatrix, score: scoreToAdd } = selectMoveFunc({
         key,
@@ -67,8 +70,9 @@ const Home = () => {
     })
 
     setTimeout(() => {
+      setIsAdd(true)
       setMatrix((prevMatrix) => addNewCell({ matrix: prevMatrix }))
-    }, 200)
+    }, 100)
   }
 
   useEffect(() => {
@@ -77,14 +81,13 @@ const Home = () => {
       window.removeEventListener('keydown', conditionalMoveFnc)
     }
   })
-
   return (
     <main>
       <Header score={score} maxScore={score} />
       <StartBox startNewGame={startNewGame} />
       <section className={styles.boardSection}>
         <BackgroundBoard />
-        <Board matrix={matrix} />
+        <Board matrix={matrix} isAdd={isAdd} />
       </section>
     </main>
   )

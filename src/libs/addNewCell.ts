@@ -28,6 +28,7 @@ export const addNewCell = ({ matrix }: IProps) => {
       } else {
         newMatrix[i][j].current = matrix[i][j].current
         newMatrix[i][j].prev = matrix[i][j].current
+        newMatrix[i][j].isNew = matrix[i][j].isNew
       }
     }
   }

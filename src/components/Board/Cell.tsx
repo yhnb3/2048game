@@ -6,12 +6,14 @@ import styles from './board.module.scss'
 
 interface IProps {
   cell: ICell
+  isAdd: boolean
 }
 
-const Cell = ({ cell }: IProps) => {
+const Cell = ({ cell, isAdd }: IProps) => {
   const { prev, current, direction, move, isNew } = cell
-  if (isNew) {
-    return <div className={cx(styles.cell, styles.colored, styles.new, styles[`color${current}`])}>{current}</div>
+  if (isNew && isAdd) {
+    const newStyle = current === 2 ? styles.new : styles.add
+    return <div className={cx(styles.cell, styles.colored, newStyle, styles[`color${current}`])}>{current}</div>
   }
   if (prev !== 0) {
     if (move !== 0) {
