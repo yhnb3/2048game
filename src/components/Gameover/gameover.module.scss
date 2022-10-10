@@ -1,0 +1,53 @@
+@use '/src/styles/constants/colors';
+
+.gameover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 450px;
+  height: 450px;
+  background-color: rgba(colors.$WHITE, 0.5);
+  border-radius: 10px;
+
+  &.show {
+    animation: show 1s;
+  }
+
+  .title {
+    width: 300px;
+    height: 100px;
+    font-size: 60px;
+    font-weight: 800;
+    color: colors.$MAIN_FONT;
+    text-align: center;
+  }
+
+  .button {
+    width: 150px;
+    height: 50px;
+    font-size: 23px;
+    color: colors.$WHITE;
+    text-align: center;
+    background-color: colors.$MAIN_FONT;
+    border-radius: 5px;
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

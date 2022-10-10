@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { BackgroundBoard, Board, Header, StartBox } from 'components'
+import { BackgroundBoard, Board, Gameover, Header, StartBox } from 'components'
 import { addNewCell, selectMoveFunc } from 'libs'
 import { useGameControl } from 'hooks'
 import { ICell } from 'types'
@@ -86,6 +86,7 @@ const Home = () => {
       <Header score={score} maxScore={score} />
       <StartBox startNewGame={startNewGame} />
       <section className={styles.boardSection}>
+        {isGameOver ? <Gameover isGameOver={isGameOver} startNewGame={startNewGame} /> : null}
         <BackgroundBoard />
         <Board matrix={matrix} isAdd={isAdd} />
       </section>
