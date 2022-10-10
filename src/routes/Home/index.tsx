@@ -1,50 +1,21 @@
+import store from 'store'
 import { useEffect, useState } from 'react'
 
 import { BackgroundBoard, Board, Gameover, Header, StartBox } from 'components'
 import { addNewCell, selectMoveFunc } from 'libs'
-import { useGameControl } from 'hooks'
-import { ICell } from 'types'
+import { useGameControl, useMatrix, useScore } from 'hooks'
 
 import styles from './home.module.scss'
 
-const INIT_MATRIX = [
-  [
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-  ],
-  [
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-  ],
-  [
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-  ],
-  [
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-    { prev: 0, current: 0, move: 0, isNew: false, direction: 'X' },
-  ],
-]
 const Home = () => {
   const [isAdd, setIsAdd] = useState(false)
-  const [matrix, setMatrix] = useState<ICell[][]>(() => {
-    setIsAdd(true)
-    return addNewCell({ matrix: addNewCell({ matrix: INIT_MATRIX }) })
-  })
-  const [score, setScore] = useState(0)
+  const { matrix, setMatrix, initMatrix } = useMatrix({ setIsAdd })
+  const { score, maxScore, setScore, initScore } = useScore()
   const { isGameOver, isPossible } = useGameControl({ matrix })
 
   const startNewGame = () => {
-    setMatrix(addNewCell({ matrix: addNewCell({ matrix: INIT_MATRIX }) }))
-    setScore(0)
+    initMatrix()
+    initScore()
   }
 
   const checkPossible = (key: string) => {
@@ -65,13 +36,22 @@ const Home = () => {
         key,
         matrix: prevMatrix,
       })
-      setScore((prevScore) => prevScore + scoreToAdd)
+      setScore((prevScore: number) => {
+        const newScore = prevScore + scoreToAdd
+        store.set('score', newScore)
+        store.set('maxScore', Math.max(newScore, maxScore))
+        return newScore
+      })
       return newMatrix
     })
 
     setTimeout(() => {
       setIsAdd(true)
-      setMatrix((prevMatrix) => addNewCell({ matrix: prevMatrix }))
+      setMatrix((prevMatrix) => {
+        const newMatrix = addNewCell({ matrix: prevMatrix })
+        store.set('matrix', newMatrix)
+        return newMatrix
+      })
     }, 100)
   }
 
@@ -81,9 +61,10 @@ const Home = () => {
       window.removeEventListener('keydown', conditionalMoveFnc)
     }
   })
+
   return (
     <main>
-      <Header score={score} maxScore={score} />
+      <Header score={score} maxScore={Math.max(score, maxScore)} />
       <StartBox startNewGame={startNewGame} />
       <section className={styles.boardSection}>
         {isGameOver ? <Gameover isGameOver={isGameOver} startNewGame={startNewGame} /> : null}

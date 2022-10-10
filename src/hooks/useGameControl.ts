@@ -1,5 +1,7 @@
-import { checkGameOver, isEqual, newMoveDown, newMoveLeft, newMoveRight, newMoveUp } from 'libs'
 import { useEffect, useState } from 'react'
+import store from 'store'
+
+import { checkGameOver, isEqual, newMoveDown, newMoveLeft, newMoveRight, newMoveUp } from 'libs'
 import { ICell } from 'types'
 
 interface IProps {
@@ -17,7 +19,11 @@ export const useGameControl = ({ matrix }: IProps) => {
     const { matrix: movedRightMatrix } = newMoveRight({ matrix })
     const { matrix: movedUpMatrix } = newMoveUp({ matrix })
     const { matrix: movedDownMatrix } = newMoveDown({ matrix })
-    setIsGameOver(checkGameOver({ movedLeftMatrix, movedRightMatrix, movedUpMatrix, movedDownMatrix }))
+    setIsGameOver(() => {
+      const gameover = checkGameOver({ movedLeftMatrix, movedRightMatrix, movedUpMatrix, movedDownMatrix })
+      store.set('gameover', gameover)
+      return gameover
+    })
     setIsLeftPossible(!isEqual({ matrix1: matrix, matrix2: movedLeftMatrix }))
     setIsRightPossible(!isEqual({ matrix1: matrix, matrix2: movedRightMatrix }))
     setIsUpPossible(!isEqual({ matrix1: matrix, matrix2: movedUpMatrix }))
