@@ -1,17 +1,32 @@
 @use '/src/styles/constants/colors';
+@import '/src/styles/mixins/media';
 
 .header {
   display: flex;
   flex-direction: row;
-  width: 450px;
-  height: 110px;
-  margin-top: 20px;
+  @include media(mobile) {
+    width: 270px;
+    height: 66px;
+    margin-top: 12px;
+  }
+  @include media(tablet, desktop) {
+    width: 450px;
+    height: 110px;
+    margin-top: 20px;
+  }
 
   .title {
     flex: 1;
-    font-size: 60px;
-    font-weight: 800;
-    line-height: 110px;
+    @include media(mobile) {
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 66px;
+    }
+    @include media(tablet, desktop) {
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 110px;
+    }
     color: colors.$MAIN_FONT;
     text-align: start;
     vertical-align: middle;
@@ -25,26 +40,49 @@
     justify-content: center;
 
     .scoreBox {
-      width: 100px;
-      height: 50px;
-      padding: 5px;
+      @include media(mobile) {
+        width: 60px;
+        height: 30px;
+        padding: 3px;
+      }
+      @include media(tablet, desktop) {
+        width: 100px;
+        height: 50px;
+        padding: 5px;
+      }
       text-align: center;
       background-color: colors.$SECONDARY;
       border-radius: 5px;
 
       .scoreTitle {
-        font-size: 12px;
+        @include media(mobile) {
+          font-size: 10px;
+        }
+        @include media(tablet, desktop) {
+          font-size: 12px;
+        }
         color: colors.$WHITE;
       }
 
       .score {
-        padding: 5px;
-        font-size: 18px;
+        @include media(mobile) {
+          padding: 3px;
+          font-size: 12px;
+        }
+        @include media(tablet, desktop) {
+          padding: 5px;
+          font-size: 18px;
+        }
         color: colors.$MAIN_FONT;
       }
 
       + .scoreBox {
-        margin-left: 10px;
+        @include media(mobile) {
+          margin-left: 6px;
+        }
+        @include media(tablet, desktop) {
+          margin-left: 10px;
+        }
       }
     }
   }
