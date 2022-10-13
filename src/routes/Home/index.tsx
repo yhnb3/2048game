@@ -1,9 +1,9 @@
 import store from 'store'
 import { useEffect, useState } from 'react'
 
-import { BackgroundBoard, Board, Gameover, Header, StartBox } from 'components'
+import { BackgroundBoard, Board, Gameover, Header, HowToPlay, StartBox } from 'components'
 import { addNewCell, selectMoveFunc } from 'libs'
-import { useGameControl, useMatrix, useScore } from 'hooks'
+import { useGameControl, useMatrix, useScore, useTouchEvent } from 'hooks'
 
 import styles from './home.module.scss'
 
@@ -27,8 +27,7 @@ const Home = () => {
     return false
   }
 
-  const conditionalMoveFnc = (e: KeyboardEvent) => {
-    const { key } = e
+  const conditionalMoveFnc = (key: string) => {
     if (isGameOver || !checkPossible(key)) return
     setIsAdd(false)
     setMatrix((prevMatrix) => {
@@ -55,10 +54,21 @@ const Home = () => {
     }, 100)
   }
 
+  const { handleTouchStart, handleTouchEnd } = useTouchEvent({ conditionalMoveFnc })
+
+  const handleKeydown = (e: KeyboardEvent) => {
+    const { key } = e
+    conditionalMoveFnc(key)
+  }
+
   useEffect(() => {
-    window.addEventListener('keydown', conditionalMoveFnc)
+    window.addEventListener('keydown', handleKeydown)
+    window.addEventListener('touchstart', handleTouchStart)
+    window.addEventListener('touchend', handleTouchEnd)
     return () => {
-      window.removeEventListener('keydown', conditionalMoveFnc)
+      window.removeEventListener('keydown', handleKeydown)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchend', handleTouchEnd)
     }
   })
 
@@ -71,6 +81,7 @@ const Home = () => {
         <BackgroundBoard />
         <Board matrix={matrix} isAdd={isAdd} />
       </section>
+      <HowToPlay />
     </main>
   )
 }

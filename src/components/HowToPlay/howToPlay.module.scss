@@ -1,0 +1,32 @@
+@use '/src/styles/constants/colors';
+@import '/src/styles/mixins/media';
+
+.howToPlay {
+  @include media(mobile) {
+    width: 270px;
+    margin-top: 30px;
+
+    .title {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .article {
+      font-size: 13px;
+      letter-spacing: 0.2px;
+    }
+  }
+  @include media(tablet, desktop) {
+    width: 450px;
+
+    .title {
+      margin-bottom: 10px;
+      font-size: 30px;
+    }
+
+    .article {
+      font-size: 18px;
+      letter-spacing: 0.2px;
+    }
+  }
+}
