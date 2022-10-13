@@ -1,6 +1,10 @@
 ## 2048 게임
 
-#### [배포주소](https://k2048.vercel.app/)
+### 배포주소
+
+#### [vercel](https://k2048.vercel.app/)
+
+#### [netlify](https://k2048.netlify.app/)
 
 #### [참고사이트](https://play2048.co/)
 
