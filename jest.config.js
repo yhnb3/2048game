@@ -6,4 +6,8 @@ module.exports = {
   },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  modulePaths: ['node_modules', 'src'],
+  moduleNameMapper: {
+    '\\.(css|scss|sass)$': 'identity-obj-proxy',
+  },
 }
