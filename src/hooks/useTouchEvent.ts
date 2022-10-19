@@ -16,6 +16,7 @@ export const useTouchEvent = ({ conditionalMoveFnc }: IProps) => {
   const handleTouchEnd = (e: TouchEvent) => {
     const moveX = x - e.changedTouches[0].clientX
     const moveY = y - e.changedTouches[0].clientY
+    if (Math.abs(moveX) <= 5 && Math.abs(moveY) <= 5) return
     if (Math.abs(moveX) > Math.abs(moveY)) {
       conditionalMoveFnc(moveX > 0 ? 'ArrowLeft' : 'ArrowRight')
     } else {
