@@ -9,7 +9,7 @@ interface IProps {
 
 const Gameover = ({ isGameOver, startNewGame }: IProps) => {
   return (
-    <div className={cx(styles.gameover, { [styles.show]: isGameOver })}>
+    <div data-testid='gameover' className={cx(styles.gameover, { [styles.show]: isGameOver })}>
       <div className={styles.title}>Game Over</div>
       <button type='button' className={styles.button} onClick={startNewGame}>
         Try Again
